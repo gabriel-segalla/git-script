@@ -5,9 +5,12 @@ import subprocess
 repo = git.Repo('./')
 g = git.cmd.Git('./')
 
-print("Executando Formatação...")     
-subprocess.check_call('npm run format', shell=True)
-
+print("Executando Formatação...")
+try:     
+    subprocess.check_call('npm run format', shell=True)
+except:
+    print("NÃO CONSEGUIU FORMATAR")
+    
 print("GIT ADD .")
 subprocess.check_call('git add .', shell=True)
 
@@ -39,5 +42,5 @@ message = '[{}] - {}'.format(repo.active_branch.name, listToStr)
 index = repo.index
 index.commit(message)
 
-#
-#g.pull()
+print("GIT PUSH...")
+g.push()
