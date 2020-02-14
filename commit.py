@@ -10,10 +10,23 @@ try:
     subprocess.check_call('npm run format', shell=True)
 except:
     print("NÃO CONSEGUIU FORMATAR")
-    
+
 print("GIT ADD .")
 subprocess.check_call('git add .', shell=True)
 
+print("GIT COMMIT...") 
+if('commit.py' in sys.argv):
+    sys.argv = sys.argv[1: len(sys.argv)] 
+listToStr = ' '.join([str(elem) for elem in sys.argv]) 
+message = '[{}] - {}'.format(repo.active_branch.name, listToStr)
+index = repo.index
+index.commit(message)
+
+print("GIT PUSH...")
+g.push()
+
+
+#TO DO
 #add_all_files = input("Deseja Adicionar todos os arquivos no commit? (Y/n)")
 #if(add_all_files.upper() == 'Y'): 
 #    subprocess.check_call('git add .', shell=True)
@@ -33,14 +46,3 @@ subprocess.check_call('git add .', shell=True)
 #    for file in files:
 #        if file.get('id') in selected_files:
 #            g.add(file.get('file'))
-
-print("GIT COMMIT...") 
-if('commit.py' in sys.argv):
-    sys.argv = sys.argv[1: len(sys.argv)] 
-listToStr = ' '.join([str(elem) for elem in sys.argv]) 
-message = '[{}] - {}'.format(repo.active_branch.name, listToStr)
-index = repo.index
-index.commit(message)
-
-print("GIT PUSH...")
-g.push()
